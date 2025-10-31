@@ -23,7 +23,7 @@ def ziyaretciler():
             id SERIAL PRIMARY KEY,
             isim TEXT
         )
-    """)
+   (""")
 
     if request.method == "POST":
         isim = request.json.get("isim")
