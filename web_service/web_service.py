@@ -4,7 +4,7 @@ import requests
 app = Flask(__name__)
 
 # Backend API URL (Render'daki mikro hizmetin adresi)
-API_URL = "https://hello-cloud4.onrender.com"
+API_URL = "https://hello-cloud-ra8t.onrender.com"
 
 # Basit HTML şablonu
 HTML = """
