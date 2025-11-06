@@ -11,7 +11,7 @@ HTML = """
 <!doctype html>
 <html>
 <head>
-    <title>Mikro Hizmetli Selam!</title>
+    <title>Ziyaretçi Defteri</title>
     <style>
         body {
             font-family: Arial;
@@ -45,7 +45,7 @@ HTML = """
     </style>
 </head>
 <body>
-    <h1>Mikro Hizmetli Selam!</h1>
+    <h1>Ziyaretçi Defteri</h1>
     <p>Adını yaz:</p>
     <form method="POST">
         <input type="text" name="isim" placeholder="Adını yaz" required>
