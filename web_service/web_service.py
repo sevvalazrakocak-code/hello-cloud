@@ -1,10 +1,11 @@
 from flask import Flask, render_template_string, request, redirect
 import requests
+import os
 
 app = Flask(__name__)
 
 # Backend API URL (Render'daki mikro hizmetin adresi)
-API_URL = "https://hello-cloud-ra8t.onrender.com"
+API_URL = "https://hello-cloud-ra8t.onrender.com"  # 🔹 Buraya kendi backend URL'ini yaz
 
 # Basit HTML şablonu
 HTML = """
@@ -25,6 +26,7 @@ HTML = """
         input {
             padding: 10px;
             font-size: 16px;
+            margin: 5px;
         }
         button {
             padding: 10px 15px;
@@ -37,7 +39,7 @@ HTML = """
         li {
             background: white;
             margin: 5px auto;
-            width: 200px;
+            width: 220px;
             padding: 8px;
             border-radius: 5px;
             list-style-type: none;
@@ -46,16 +48,16 @@ HTML = """
 </head>
 <body>
     <h1>Ziyaretçi Defteri</h1>
-    <p>Adını yaz:</p>
     <form method="POST">
         <input type="text" name="isim" placeholder="Adını yaz" required>
+        <input type="text" name="sehir" placeholder="Şehrini yaz" required>
         <button type="submit">Gönder</button>
     </form>
 
     <h3>Ziyaretçiler:</h3>
     <ul>
-        {% for ad in isimler %}
-            <li>{{ ad }}</li>
+        {% for kisi in isimler %}
+            <li>{{ kisi.isim }} ({{ kisi.sehir }})</li>
         {% endfor %}
     </ul>
 </body>
@@ -66,9 +68,11 @@ HTML = """
 def index():
     if request.method == "POST":
         isim = request.form.get("isim")
+        sehir = request.form.get("sehir")
+
         # Backend API'ye POST isteği gönder
         try:
-            requests.post(API_URL + "/ziyaretciler", json={"isim": isim})
+            requests.post(API_URL + "/ziyaretciler", json={"isim": isim, "sehir": sehir})
         except Exception as e:
             print("API'ye bağlanılamadı:", e)
         return redirect("/")
@@ -82,8 +86,6 @@ def index():
         isimler = []
 
     return render_template_string(HTML, isimler=isimler)
-
-import os
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
