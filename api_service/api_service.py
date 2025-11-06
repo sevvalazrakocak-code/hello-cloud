@@ -24,21 +24,34 @@ def home():
 def ziyaretciler():
     conn = connect_db()
     cur = conn.cursor()
-    cur.execute("CREATE TABLE IF NOT EXISTS ziyaretciler (id SERIAL PRIMARY KEY, isim TEXT)")
+    
+    # Tabloyu şehir alanıyla birlikte oluştur
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS ziyaretciler (
+            id SERIAL PRIMARY KEY,
+            isim TEXT,
+            sehir TEXT
+        )
+    """)
 
+    # POST isteği ile yeni kayıt ekleme
     if request.method == "POST":
-        isim = request.json.get("isim")
-        if isim:
-            cur.execute("INSERT INTO ziyaretciler (isim) VALUES (%s)", (isim,))
+        data = request.get_json()
+        isim = data.get("isim")
+        sehir = data.get("sehir")
+
+        if isim and sehir:
+            cur.execute("INSERT INTO ziyaretciler (isim, sehir) VALUES (%s, %s)", (isim, sehir))
             conn.commit()
 
-    cur.execute("SELECT isim FROM ziyaretciler ORDER BY id DESC LIMIT 10")
-    isimler = [row[0] for row in cur.fetchall()]
+    # Son 10 kaydı listele (isim + şehir)
+    cur.execute("SELECT isim, sehir FROM ziyaretciler ORDER BY id DESC LIMIT 10")
+    kayitlar = [{"isim": row[0], "sehir": row[1]} for row in cur.fetchall()]
 
     cur.close()
     conn.close()
 
-    return jsonify(isimler)
+    return jsonify(kayitlar)
 
 # 🔹 Uygulama yerel çalıştırma ayarı
 if __name__ == "__main__":
