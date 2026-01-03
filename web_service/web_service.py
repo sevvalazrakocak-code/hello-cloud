@@ -5,13 +5,14 @@ import os
 app = Flask(__name__)
 
 # Backend API URL (Render'daki mikro hizmetin adresi)
-API_URL = "https://hello-cloud-ra8t.onrender.com"  # 🔹 Buraya kendi backend URL'ini yaz
+API_URL = "https://hello-cloud-ra8t.onrender.com"  # kendi backend URL'in
 
 # Basit HTML şablonu
 HTML = """
 <!doctype html>
-<html>
+<html lang="tr">
 <head>
+    <meta charset="utf-8">
     <title>Ziyaretçi Defteri</title>
     <style>
         body {
@@ -44,10 +45,21 @@ HTML = """
             border-radius: 5px;
             list-style-type: none;
         }
+        hr {
+            margin-top: 40px;
+            width: 60%;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
+
     <h1>Ziyaretçi Defteri</h1>
+
     <form method="POST">
         <input type="text" name="isim" placeholder="Adını yaz" required>
         <input type="text" name="sehir" placeholder="Şehrini yaz" required>
@@ -60,6 +72,12 @@ HTML = """
             <li>{{ kisi.isim }} ({{ kisi.sehir }})</li>
         {% endfor %}
     </ul>
+
+    <hr>
+    <p class="footer">
+        Hazırlayan: Şevval Azra Koçak
+    </p>
+
 </body>
 </html>
 """
