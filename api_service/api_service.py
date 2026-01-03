@@ -8,7 +8,7 @@ CORS(app)
 # Veritabanı bağlantısı
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://sevval:C2TbUsmgDpeSO5zG34kl2cLqd94IoUaC@dpg-d426lkpr0fns739009mg-a.oregon-postgres.render.com/hello_cloud2_db_n274"
+    ""
 )
 
 def connect_db():
